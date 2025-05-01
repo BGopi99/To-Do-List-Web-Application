@@ -1,0 +1,40 @@
+{% include 'base.html'%}
+{% load static%}
+<link rel="stylesheet" href="{% static 'style.css' %}">
+{% block content %}
+<form method="post">
+    {%csrf_token%}
+    <label for="name">Taskname:</label>
+    <input type="text" name="name" id="name"><br><br>
+    <label for="desc">Description:</label>
+    <textarea name="desc" id="desc" rows="2" cols="30"></textarea><br><br>
+    <label for="date">End Date:</label>
+    <input type="date" name="date" id="date"><br><br>
+    <button type="submit">Add</button>
+</form>
+<br><br>
+<div>
+
+    <table rules="all" border="2" cellpadding="15px">
+        <caption>TODO-LISTS</caption>
+        <tr>
+            <th>slno</th>
+            <th>Taskname</th>
+            <th>Description</th>
+            <th>Due-date</th>
+            <th colspan="2">Modifications</th>
+        </tr>
+        {% for d in data%}
+        <tr>
+            <td>{{d.id}}</td>
+            <td>{{d.taskname}}</td>
+            <td>{{d.desc}}</td>
+            <td>{{d.date}}</td>
+            <td><a href="{% url 'update' d.id%}"><button id="update">Update</button></a></td>
+            <td><a href="{% url 'delete' d.id%}"><button id="delete">Delete</button< /a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock content %}
